@@ -1,0 +1,81 @@
+* {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    text-decoration: none;
+}
+
+header{
+    background-color: #807182;
+    height: 10vw;
+}
+
+body{
+    background-color: #C7D3BF;
+}
+
+.menu{
+    color: #C7D3BF;
+    font-size: 1.8rem;
+    margin-left: 26vw;
+    margin-top: 12vw;
+    padding-top: 12vw;
+}
+
+.titre{
+    margin-top: 7vw;
+    color: #807182;
+    font-size: 2.7rem;
+    text-align: center;
+}
+
+.text{
+    color: #6e5871;
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+form{
+    text-align: center;
+}
+form h2 {
+    color: white;
+    font-family: "Helvetica Neue";
+    font-weight: bold;
+    font-size: 4em;
+}
+
+form h2 span {
+    transition: 0.1s;
+}
+
+form h3 {
+    color: white;
+    font-family: "Helvetica Neue";
+    font-weight: bold;
+    font-size: 0.7em;
+}
+
+form h3 a {
+    color: #E87D3F;
+    border-bottom: 1px solid #E87D3F;
+    transition: 0.2s;
+}
+
+form h3 a:hover {
+    color: #ffbc00;
+    border-bottom: 1px solid #ffbc00;
+}
+
+form input {
+    height: 4vw;
+    width: 30vw;
+    border: none;
+    border-radius: 10px;
+    margin-top: 2vw;
+    font-size: 1.5vw;
+}
+
+form input::placeholder {
+    padding-left: 1vw;
+}
