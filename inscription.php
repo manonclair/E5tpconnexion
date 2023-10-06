@@ -1,32 +1,39 @@
 <?php
-include ('hhf/head.php');
+include('hhf/head.php');
 
 session_start();
 
 $bdd = new PDO('mysql:host=localhost;dbname=E5_connexion;charset=utf8', 'root', '', array(PDO::ATTR_PERSISTENT => true));
-if(isset($_POST['boutton'])){
-
-    if(!empty($_POST['email']) && !empty($_POST['password']) && !empty($_POST['confirmation'])){
+if (isset($_POST['boutton'])) {
+    if (!empty($_POST['email']) && !empty($_POST['password']) && !empty($_POST['confirmation'])) {
         $email = htmlspecialchars($_POST['email']);
         $password = $_POST['password'];
         $confirmation = $_POST['confirmation'];
 
-        if($password === $confirmation) {
-            $passwordHash = password_hash($password, PASSWORD_DEFAULT);
+        // Vérifier si l'email existe déjà dans la base de données
+        $checkEmailQuery = $bdd->prepare('SELECT email FROM contact WHERE email = ?');
+        $checkEmailQuery->execute(array($email));
+        $existingEmail = $checkEmailQuery->fetch();
 
-            $insertUsers = $bdd->prepare('INSERT INTO contact (email, password) VALUES (?, ?)');
+        if (!$existingEmail) {
+            if ($password === $confirmation) {
+                $passwordHash = password_hash($password, PASSWORD_DEFAULT);
 
-            $insertUsers->execute(array($email,$passwordHash));
+                $insertUsers = $bdd->prepare('INSERT INTO contact (email, password) VALUES (?, ?)');
+                $insertUsers->execute(array($email, $passwordHash));
 
-            $userId = $bdd->lastInsertId();
-            $_SESSION['email'] = $email;
-            $_SESSION['id'] = $userId;
-            header('Location: accueil.php');
-            echo "<script> alert('Inscription réussie !') </script>";
+                $userId = $bdd->lastInsertId();
+                $_SESSION['email'] = $email;
+                $_SESSION['id'] = $userId;
+                header('Location: accueil.php');
+                echo "<script> alert('Inscription réussie !') </script>";
+            } else {
+                echo "<script> alert('La confirmation du mot de passe ne correspond pas.') </script>";
+            }
         } else {
-            echo "<script> alert('La confirmation du mot de passe ne correspond pas.') </script>";
+            echo "<script> alert('L email existe déjà. Veuillez choisir un autre email.') </script>";
         }
-    }   else {
+    } else {
         echo "<script> alert('Veuillez remplir tous les champs.') </script>";
     }
 }
